@@ -1,6 +1,6 @@
 import { useAuth } from "@/contexts/AuthContext";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { ShoppingCart, LogOut, UtensilsCrossed, ArrowLeft } from "lucide-react";
+import { ShoppingCart, LogOut, UtensilsCrossed, ArrowLeft, UserCircle } from "lucide-react";
 import { useCart } from "@/contexts/CartContext";
 import { Button } from "@/components/ui/button";
 

@@ -35,9 +35,13 @@ const Landing = () => {
             </Button>
           </Link>
           <Link to="/register">
-            <Button size="lg" variant="outline" className="w-full border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 px-10 text-base font-semibold sm:w-auto">
-              Register
-            </Button>
+            <Link to="/register">
+  <Button
+    size="lg"
+    className="w-full gradient-warm text-primary-foreground px-10 text-base font-semibold sm:w-auto">
+    Register
+  </Button>
+</Link>
           </Link>
         </div>
       </div>

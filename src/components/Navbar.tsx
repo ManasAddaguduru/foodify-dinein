@@ -8,6 +8,8 @@ const Navbar = () => {
   const { user, signOut } = useAuth();
   const { itemCount } = useCart();
   const location = useLocation();
+  const navigate = useNavigate();
+  const showBack = location.pathname !== "/home";
 
   if (!user) return null;
 

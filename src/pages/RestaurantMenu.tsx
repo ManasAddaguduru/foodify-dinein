@@ -17,6 +17,7 @@ const RestaurantMenu = () => {
   const mode = searchParams.get("mode") || "delivery";
   const restaurant = restaurants.find((r) => r.id === id);
   const { toast } = useToast();
+  const { user } = useAuth();
 
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");

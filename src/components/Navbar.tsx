@@ -1,6 +1,6 @@
 import { useAuth } from "@/contexts/AuthContext";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { ShoppingCart, LogOut, UtensilsCrossed, ArrowLeft } from "lucide-react";
+import { ShoppingCart, LogOut, UtensilsCrossed, ArrowLeft, UserCircle } from "lucide-react";
 import { useCart } from "@/contexts/CartContext";
 import { Button } from "@/components/ui/button";
 
@@ -27,7 +27,12 @@ const Navbar = () => {
             <span className="font-display text-2xl font-bold text-foreground">Foodify</span>
           </Link>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-1">
+          <Link to="/profile">
+            <Button variant="ghost" size="icon">
+              <UserCircle className="h-5 w-5" />
+            </Button>
+          </Link>
           <Link to="/cart" className="relative">
             <Button variant="ghost" size="icon" className="relative">
               <ShoppingCart className="h-5 w-5" />

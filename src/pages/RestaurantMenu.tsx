@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
+import { supabase } from "@/integrations/supabase/client";
 
 const RestaurantMenu = () => {
   const { id } = useParams();
@@ -15,6 +17,7 @@ const RestaurantMenu = () => {
   const mode = searchParams.get("mode") || "delivery";
   const restaurant = restaurants.find((r) => r.id === id);
   const { toast } = useToast();
+  const { user } = useAuth();
 
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
@@ -31,12 +34,27 @@ const RestaurantMenu = () => {
 
   const timeSlots = ["12:00 PM", "12:30 PM", "1:00 PM", "1:30 PM", "7:00 PM", "7:30 PM", "8:00 PM", "8:30 PM", "9:00 PM"];
 
-  const handleBookTable = () => {
+  const handleBookTable = async () => {
     if (!date || !time || !people) {
       toast({ title: "Please fill all booking details", variant: "destructive" });
       return;
     }
-    toast({ title: `Table booked at ${restaurant.name}!`, description: `${date} at ${time} for ${people} people` });
+    if (!user) return;
+    const { error } = await supabase.from("bookings").insert({
+      user_id: user.id,
+      restaurant_name: restaurant.name,
+      booking_date: date,
+      booking_time: time,
+      num_people: parseInt(people),
+    });
+    if (error) {
+      toast({ title: "Failed to book table", variant: "destructive" });
+    } else {
+      toast({ title: `Table booked at ${restaurant.name}!`, description: `${date} at ${time} for ${people} people` });
+      setDate("");
+      setTime("");
+      setPeople("2");
+    }
   };
 
   return (

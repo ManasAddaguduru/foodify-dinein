@@ -16,10 +16,17 @@ const Navbar = () => {
   return (
     <nav className="sticky top-0 z-50 border-b border-border bg-card/80 backdrop-blur-md">
       <div className="container mx-auto flex items-center justify-between px-4 py-3">
-        <Link to="/home" className="flex items-center gap-2">
-          <UtensilsCrossed className="h-7 w-7 text-primary" />
-          <span className="font-display text-2xl font-bold text-foreground">Foodify</span>
-        </Link>
+        <div className="flex items-center gap-2">
+          {showBack && (
+            <Button variant="ghost" size="icon" onClick={() => navigate(-1)}>
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+          )}
+          <Link to="/home" className="flex items-center gap-2">
+            <UtensilsCrossed className="h-7 w-7 text-primary" />
+            <span className="font-display text-2xl font-bold text-foreground">Foodify</span>
+          </Link>
+        </div>
         <div className="flex items-center gap-3">
           <Link to="/cart" className="relative">
             <Button variant="ghost" size="icon" className="relative">

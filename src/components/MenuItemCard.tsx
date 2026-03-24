@@ -11,11 +11,12 @@ interface Props {
 
 const MenuItemCard = ({ item, restaurantId, restaurantName }: Props) => {
   const { items, addItem, updateQuantity } = useCart();
-  const cartItem = items.find((i) => i.id === item.id);
+  const cartId = `${restaurantId}-${item.id}`;
+  const cartItem = items.find((i) => i.id === cartId);
 
   const handleAdd = () => {
     addItem({
-      id: item.id,
+      id: cartId,
       name: item.name,
       price: item.price,
       image: item.image,
@@ -41,7 +42,7 @@ const MenuItemCard = ({ item, restaurantId, restaurantName }: Props) => {
           <span className="text-lg font-bold text-foreground">₹{item.price}</span>
           {cartItem ? (
             <div className="flex items-center gap-2 rounded-lg bg-primary/10 px-1">
-              <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => updateQuantity(item.id, cartItem.quantity - 1)}>
+              <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => updateQuantity(cartId, cartItem.quantity - 1)}>
                 <Minus className="h-4 w-4" />
               </Button>
               <span className="w-6 text-center font-bold text-primary">{cartItem.quantity}</span>

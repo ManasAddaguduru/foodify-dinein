@@ -1,17 +1,35 @@
 import { useCart } from "@/contexts/CartContext";
+import { useAuth } from "@/contexts/AuthContext";
+import { supabase } from "@/integrations/supabase/client";
 import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import { Minus, Plus, Trash2, ShoppingBag } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
+import { useState } from "react";
 
 const Cart = () => {
   const { items, updateQuantity, removeItem, clearCart, total } = useCart();
+  const { user } = useAuth();
   const { toast } = useToast();
+  const [placing, setPlacing] = useState(false);
 
-  const handlePlaceOrder = () => {
-    toast({ title: "Order placed successfully! 🎉", description: `Total: ₹${total}. Your food is being prepared.` });
-    clearCart();
+  const handlePlaceOrder = async () => {
+    if (!user) return;
+    setPlacing(true);
+    const orderItems = items.map((i) => ({ name: i.name, quantity: i.quantity, price: i.price, restaurantName: i.restaurantName }));
+    const { error } = await supabase.from("orders").insert({
+      user_id: user.id,
+      items: orderItems,
+      total: total + 40,
+    });
+    if (error) {
+      toast({ title: "Failed to place order", variant: "destructive" });
+    } else {
+      toast({ title: "Order placed successfully! 🎉", description: `Total: ₹${total + 40}. Your food is being prepared.` });
+      clearCart();
+    }
+    setPlacing(false);
   };
 
   return (

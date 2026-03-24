@@ -87,8 +87,8 @@ const Cart = () => {
                 <span className="font-bold text-foreground">Total</span>
                 <span className="font-bold text-primary">₹{total + 40}</span>
               </div>
-              <Button onClick={handlePlaceOrder} className="mt-6 w-full gradient-warm text-primary-foreground text-lg font-semibold py-6">
-                Place Order — ₹{total + 40}
+              <Button onClick={handlePlaceOrder} disabled={placing} className="mt-6 w-full gradient-warm text-primary-foreground text-lg font-semibold py-6">
+                {placing ? "Placing order…" : `Place Order — ₹${total + 40}`}
               </Button>
             </div>
           </>

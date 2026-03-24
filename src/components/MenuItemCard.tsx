@@ -11,11 +11,12 @@ interface Props {
 
 const MenuItemCard = ({ item, restaurantId, restaurantName }: Props) => {
   const { items, addItem, updateQuantity } = useCart();
-  const cartItem = items.find((i) => i.id === item.id);
+  const cartId = `${restaurantId}-${item.id}`;
+  const cartItem = items.find((i) => i.id === cartId);
 
   const handleAdd = () => {
     addItem({
-      id: item.id,
+      id: cartId,
       name: item.name,
       price: item.price,
       image: item.image,
